@@ -47,13 +47,16 @@ func QueryToLookupWithKeysOnly() grpc.UnaryClientInterceptor {
 		}
 
 		// Invoke Lookup.
+		keymap := make(map[string]int)
 		getReq := &datastorepb.LookupRequest{
 			ProjectId:   in.ProjectId,
 			ReadOptions: in.GetReadOptions(),
 			Keys:        make([]*datastorepb.Key, len(result)),
 		}
 		for i, v := range result {
-			getReq.Keys[i] = v.GetEntity().GetKey()
+			key := v.GetEntity().GetKey()
+			keymap[key.String()] = i
+			getReq.Keys[i] = key
 		}
 		getReply := &datastorepb.LookupResponse{}
 		if err := invoker(ctx, "/google.datastore.v1.Datastore/Lookup", getReq, getReply, cc, opts...); err != nil {
@@ -66,8 +69,9 @@ func QueryToLookupWithKeysOnly() grpc.UnaryClientInterceptor {
 		}
 
 		// Set results.
-		for i, v := range found {
-			out.Batch.EntityResults[i].Entity = v.Entity
+		for _, v := range found {
+			e := v.GetEntity()
+			out.Batch.EntityResults[keymap[e.GetKey().String()]].Entity = e
 		}
 		out.Batch.EntityResultType = datastorepb.EntityResult_FULL
 		return nil

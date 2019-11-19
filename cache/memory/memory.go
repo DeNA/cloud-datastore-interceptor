@@ -39,7 +39,7 @@ func NewCache(expiration time.Duration) *Cache {
 // GetMulti returns the values of the given keys as a slice of []byte. If the
 // item has expired, the corresponding index of the return value will be nil.
 func (c *Cache) GetMulti(ctx context.Context, keys []*datastorepb.Key) [][]byte {
-	_, span := trace.StartSpan(ctx, "github.com/daisuzu/cloud-datastore-interceptor/cache/memory.GetMulti")
+	_, span := trace.StartSpan(ctx, "github.com/DeNA/cloud-datastore-interceptor/cache/memory.GetMulti")
 	defer func() { span.End() }()
 
 	c.mu.RLock()
@@ -61,7 +61,7 @@ func (c *Cache) GetMulti(ctx context.Context, keys []*datastorepb.Key) [][]byte 
 
 // SetMulti sets the given keys and values to items.
 func (c *Cache) SetMulti(ctx context.Context, keys []*datastorepb.Key, values [][]byte) {
-	_, span := trace.StartSpan(ctx, "github.com/daisuzu/cloud-datastore-interceptor/cache/memory.SetMulti")
+	_, span := trace.StartSpan(ctx, "github.com/DeNA/cloud-datastore-interceptor/cache/memory.SetMulti")
 	defer func() { span.End() }()
 
 	c.mu.Lock()
@@ -80,7 +80,7 @@ func (c *Cache) SetMulti(ctx context.Context, keys []*datastorepb.Key, values []
 // DeleteMulti deletes items for the given keys. The returned error is always
 // nil.
 func (c *Cache) DeleteMulti(ctx context.Context, keys []*datastorepb.Key) error {
-	_, span := trace.StartSpan(ctx, "github.com/daisuzu/cloud-datastore-interceptor/cache/memory.DeleteMulti")
+	_, span := trace.StartSpan(ctx, "github.com/DeNA/cloud-datastore-interceptor/cache/memory.DeleteMulti")
 	defer func() { span.End() }()
 
 	c.mu.Lock()

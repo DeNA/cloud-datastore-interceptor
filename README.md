@@ -1,8 +1,8 @@
 # cloud-datastore-interceptor
 
-[![GoDoc](https://godoc.org/github.com/daisuzu/cloud-datastore-interceptor?status.svg)](https://godoc.org/github.com/daisuzu/cloud-datastore-interceptor)
+[![GoDoc](https://godoc.org/github.com/DeNA/cloud-datastore-interceptor?status.svg)](https://godoc.org/github.com/DeNA/cloud-datastore-interceptor)
 
-Package `github.com/daisuzu/cloud-datastore-interceptor` provides gRPC interceptors for Cloud Datastore([cloud.google.com/go/datastore](https://godoc.org/cloud.google.com/go/datastore)).
+Package `github.com/DeNA/cloud-datastore-interceptor` provides gRPC interceptors for Cloud Datastore([cloud.google.com/go/datastore](https://godoc.org/cloud.google.com/go/datastore)).
 
 ## Examples
 
@@ -23,7 +23,7 @@ client, err := datastore.NewClient(ctx, projID, opts...)
 
 ### Cache query results
 
-[cache.UnaryClientInterceptor](https://godoc.org/github.com/daisuzu/cloud-datastore-interceptor/cache#UnaryClientInterceptor) does not use the cache for [Query](https://godoc.org/cloud.google.com/go/datastore#Query)(e.g., [Client.GetAll](https://godoc.org/cloud.google.com/go/datastore#Client.GetAll), [Client.Run](https://godoc.org/cloud.google.com/go/datastore#Client.Run)), but by using [transform.QueryToLookupWithKeysOnly](https://godoc.org/github.com/daisuzu/cloud-datastore-interceptor/transform#QueryToLookupWithKeysOnly), it is transformed to gRPC equivalent to [Client.GetMulti](https://godoc.org/cloud.google.com/go/datastore#Client.GetMulti) and the cache is used.
+[cache.UnaryClientInterceptor](https://godoc.org/github.com/DeNA/cloud-datastore-interceptor/cache#UnaryClientInterceptor) does not use the cache for [Query](https://godoc.org/cloud.google.com/go/datastore#Query)(e.g., [Client.GetAll](https://godoc.org/cloud.google.com/go/datastore#Client.GetAll), [Client.Run](https://godoc.org/cloud.google.com/go/datastore#Client.Run)), but by using [transform.QueryToLookupWithKeysOnly](https://godoc.org/github.com/DeNA/cloud-datastore-interceptor/transform#QueryToLookupWithKeysOnly), it is transformed to gRPC equivalent to [Client.GetMulti](https://godoc.org/cloud.google.com/go/datastore#Client.GetMulti) and the cache is used.
 
 ```go
 opts := []option.ClientOption{

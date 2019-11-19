@@ -1,4 +1,4 @@
-module github.com/daisuzu/cloud-datastore-interceptor
+module github.com/DeNA/cloud-datastore-interceptor
 
 require (
 	cloud.google.com/go v0.44.1

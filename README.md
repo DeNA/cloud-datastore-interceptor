@@ -12,11 +12,11 @@ This will use in-memory cache on [Client.Get](https://godoc.org/cloud.google.com
 
 ```go
 opts := []option.ClientOption{
-		option.WithGRPCDialOption(
-			grpc.WithUnaryInterceptor(
-				cache.UnaryClientInterceptor(memory.NewCache(1 * time.Minute)),
-			),
+	option.WithGRPCDialOption(
+		grpc.WithUnaryInterceptor(
+			cache.UnaryClientInterceptor(memory.NewCache(1 * time.Minute)),
 		),
+	),
 }
 client, err := datastore.NewClient(ctx, projID, opts...)
 ```
@@ -27,12 +27,12 @@ client, err := datastore.NewClient(ctx, projID, opts...)
 
 ```go
 opts := []option.ClientOption{
-		option.WithGRPCDialOption(
-			grpc.WithChainUnaryInterceptor(
-				transform.QueryToLookupWithKeysOnly(),
-				cache.UnaryClientInterceptor(memory.NewCache(1 * time.Minute)),
-			),
+	option.WithGRPCDialOption(
+		grpc.WithChainUnaryInterceptor(
+			transform.QueryToLookupWithKeysOnly(),
+			cache.UnaryClientInterceptor(memory.NewCache(1*time.Minute)),
 		),
+	),
 }
 client, err := datastore.NewClient(ctx, projID, opts...)
 ```
@@ -43,11 +43,11 @@ Same as [In-Memory cache](#in-memory-cache), but the backend is Redis using [red
 
 ```go
 opts := []option.ClientOption{
-		option.WithGRPCDialOption(
-			grpc.WithUnaryInterceptor(
-				cache.UnaryClientInterceptor(redis.NewCache(1 * time.Minute, redisClient)),
-			),
+	option.WithGRPCDialOption(
+		grpc.WithUnaryInterceptor(
+			cache.UnaryClientInterceptor(redis.NewCache(1*time.Minute, redisClient)),
 		),
+	),
 }
 client, err := datastore.NewClient(ctx, projID, opts...)
 ```

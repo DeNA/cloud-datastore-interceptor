@@ -142,9 +142,10 @@ func UnaryClientInterceptor(cacher Cacher) grpc.UnaryClientInterceptor {
 				}
 			}
 			if len(keys) > 0 {
-				return cacher.DeleteMulti(ctx, keys)
+				if err := cacher.DeleteMulti(ctx, keys); err != nil {
+					return DelError{wrapped: err}
+				}
 			}
-
 			return nil
 		}
 

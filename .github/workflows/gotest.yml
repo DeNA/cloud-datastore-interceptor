@@ -3,12 +3,26 @@ name: Go Test
 on: [push]
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go: [1.11, 1.12, 1.13, 1.14, 1.15]
+        # go: [1.11, 1.12, 1.13, 1.14, 1.15]
+        go: [1.11]
     name: Go ${{ matrix.go }} test
+
+    services:
+      datastore:
+        image: google/cloud-sdk:emulators
+        env:
+          DATASTORE_LISTEN_ADDRESS: 0.0.0.0:8081
+          DATASTORE_PROJECT_ID: unittest
+        ports:
+          - 8081:8081
+    env:
+      DATASTORE_EMULATOR_HOST: localhost:8081
+
     steps:
     - uses: actions/checkout@v2
 
